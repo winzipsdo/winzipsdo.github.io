@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <p class="img-wrapper" align="center">
       <img src="@/assets/test1.png" />
     </p>
