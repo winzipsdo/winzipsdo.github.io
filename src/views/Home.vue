@@ -6,12 +6,6 @@
     <p class="img-wrapper" align="center">
       <img src="@/assets/test2.png" />
     </p>
-    <p style="width: 100%; text-align: center;">
-      垂緌饮清露<br />
-      流响出疏桐<br />
-      居高声自远<br />
-      非是藉秋风
-    </p>
   </div>
 </template>
 
