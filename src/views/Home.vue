@@ -4,7 +4,7 @@
     <transition name="el-fade-in-linear">
       <div class="content-wrapper" v-show="state.contentShow">
         <p v-for="(row, index) in currentSong.text" :key="index">{{row}}</p>
-        <p>{{currentSong.title}} - {{currentSong.author}}</p>
+        <p class="message">{{currentSong.title}} - {{currentSong.author}}</p>
       </div>
     </transition>
   </div>
@@ -61,7 +61,7 @@ export default {
     },
     async handleStopLoop() {
       window.clearInterval(this.timer);
-      this.time = '';
+      this.timer = '';
     },
   },
 };
@@ -85,4 +85,7 @@ export default {
   .content-wrapper
     p
       font-family Serif
+    .message
+      padding-top 1em
+      border-top solid  rgba(100, 100, 100, .2) 1px
 </style>
