@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "npm run clear&&vue-cli-service build&&mv dist/* ./&&rimraf dist",
     "lint": "vue-cli-service lint",
-    "clear": "rimraf js css img dist index.html favicon.ico"
+    "clear": "rimraf js css img fonts dist index.html favicon.ico"
   },
   "dependencies": {
     "element-ui": "^2.4.5",
