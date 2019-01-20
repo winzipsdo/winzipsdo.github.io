@@ -19,6 +19,7 @@ export default {
   name: 'home',
   mounted() {
     window.vue = this;
+    this.handleGetRandomSong();
     this.handleStartLoop();
     window.addEventListener('blur', () => {
       this.handleStopLoop();
