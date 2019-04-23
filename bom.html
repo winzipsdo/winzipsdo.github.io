@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Navigator</title>
+  <style>
+    body {
+      font-family: Serif, sans-serif;
+      background-color: #F7F6F7;
+    }
+
+    #list {
+      width: 1080px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #list>dt {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 1em;
+    }
+
+    #list>dd {
+      -webkit-margin-start: 0;
+      background-color: #21222A;
+      color: #81D7F7;
+      border-radius: 5px;
+      padding: 0.5em;
+      margin: 0.5em 1em;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    @media screen and (max-width: 1000px) {
+      #list {
+        width: 100%;
+        align-items: center;
+      }
+
+      #list>dt {
+        padding: 0;
+        margin: 0.5em 0;
+      }
+
+      #list>dd {
+        padding: 1em;
+        margin: 0.5em 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <dl id="list">
+  </dl>
+  <script>
+    let root = document.querySelector("#list");
+    root.appendItem = function (propName, propValue) {
+      let dt = document.createElement("dt");
+      dt.innerHTML = propName;
+      this.appendChild(dt);
+      let dd = document.createElement("dd");
+      dd.innerHTML = propValue;
+      this.appendChild(dd);
+    };
+    // viewport start
+    root.appendItem("viewport width", document.documentElement.clientWidth);
+    root.appendItem("viewport height", document.documentElement.clientHeight);
+    // viewport end
+    // window start
+    root.appendItem("window.innerWidth", window.innerWidth);
+    root.appendItem("window.outerWidth", window.outerWidth);
+    root.appendItem("window.clientWidth", window.clientWidth);
+    root.appendItem("window.devicePixelRatio", window.devicePixelRatio);
+    // window end
+    // screen start
+    root.appendItem("window.screen.width", window.screen.width);
+    root.appendItem("window.screen.height", window.screen.height);
+    // screen end
+    // navigator start
+    root.appendItem("window.navigator.userAgent", window.navigator.userAgent);
+    root.appendItem("window.navigator.platform", window.navigator.platform);
+    root.appendItem("window.navigator.language", window.navigator.language);
+    root.appendItem("window.navigator.cookieEnabled", window.navigator.cookieEnabled);
+    root.appendItem("window.navigator.onLine", window.navigator.onLine);
+    // navigator end
+    // location start
+    root.appendItem("window.location.href", window.location.href);
+    root.appendItem("window.location.protocol", window.location.protocol);
+    root.appendItem("window.location.host", window.location.host);
+    root.appendItem("window.location.port", window.location.port);
+    root.appendItem("window.location.pathname", window.location.pathname);
+    root.appendItem("window.location.search", window.location.search);
+    // location end
+  </script>
+</body>
+
+</html>
