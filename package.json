@@ -9,6 +9,7 @@
     "clear": "rimraf js css img fonts dist index.html favicon.ico"
   },
   "dependencies": {
+    "@vue/composition-api": "^0.3.2",
     "axios": "^0.19.0",
     "element-ui": "^2.4.5",
     "vue": "^2.5.17",

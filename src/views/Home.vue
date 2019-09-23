@@ -2,23 +2,23 @@
   <div class="container">
     <!-- <el-button @click="handleGetRandomSong">test</el-button> -->
     <transition name="el-fade-in-linear">
-      <div class="content-wrapper" v-show="state.contentShow">
-        <p v-for="(row, index) in currentSong.text" :key="index">{{row}}</p>
-        <p class="message">{{currentSong.title}} - {{currentSong.author}}</p>
+      <div class="content-wrapper" v-show="contentVisible">
+        <p v-for="(row, index) in currentSong.text" :key="index">{{ row }}</p>
+        <p class="message">{{ currentSong.title }} - {{ currentSong.author }}</p>
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { createComponent, ref } from '@vue/composition-api';
 
-const songs = require('../assets/data/songs.json');
+import sleep from '@/utils/sleep';
+import songs from '@/assets/data/songs.json';
 
-export default {
+export default createComponent({
   name: 'home',
   mounted() {
-    window.vue = this;
     this.handleGetRandomSong();
     this.handleStartLoop();
     window.addEventListener('blur', () => {
@@ -28,65 +28,69 @@ export default {
       this.handleStartLoop();
     });
   },
-  data() {
+  setup() {
+    const timer = ref('');
+    const currentSong = ref(songs[0]);
+    const contentVisible = ref(true);
+
+    async function handleGetRandomSong() {
+      contentVisible.value = false;
+      await sleep(800);
+      const { length } = songs;
+      const index = Math.floor(Math.random() * length);
+      currentSong.value = songs[index];
+      contentVisible.value = true;
+      console.log(new Date());
+    }
+
+    async function handleStartLoop() {
+      if (timer.value === '') {
+        timer.value = setInterval(handleGetRandomSong, 5000);
+      }
+    }
+
+    async function handleStopLoop() {
+      window.clearInterval(timer.value);
+      timer.value = '';
+    }
+
     return {
-      timer: '',
-      songs,
-      currentSong: songs[0],
-      state: {
-        contentShow: true,
-      },
+      timer,
+      currentSong,
+      contentVisible,
+      handleGetRandomSong,
+      handleStartLoop,
+      handleStopLoop,
     };
   },
-  methods: {
-    async sleep(ms) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, ms);
-      });
-    },
-    async handleGetRandomSong() {
-      this.state.contentShow = false;
-      await this.sleep(800);
-      const { length } = this.songs;
-      const index = Math.floor(Math.random() * length);
-      this.currentSong = this.songs[index];
-      this.state.contentShow = true;
-      console.log(new Date());
-    },
-    async handleStartLoop() {
-      if (this.timer === '') {
-        this.timer = setInterval(this.handleGetRandomSong, 5000);
-      }
-    },
-    async handleStopLoop() {
-      window.clearInterval(this.timer);
-      this.timer = '';
-    },
-  },
-};
+});
 </script>
 
 <style lang="stylus">
+body {
+  font-family: Serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
 
-  body
-    font-family Serif
-    display flex
-    flex-direction column
-    justify-content center
-    align-items center
-    height 90vh
+.img-wrapper {
+  img {
+    display: inline-block;
+    width: 500px;
+  }
+}
 
-  .img-wrapper
-    img
-      display inline-block
-      width 500px
+.content-wrapper {
+  p {
+    font-family: Serif;
+  }
 
-  .content-wrapper
-    p
-      font-family Serif
-    .message
-      padding-top 1em
-      border-top solid  rgba(100, 100, 100, .2) 1px
+  .message {
+    padding-top: 1em;
+    border-top: solid rgba(100, 100, 100, 0.2) 1px;
+  }
+}
 </style>
