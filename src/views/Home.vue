@@ -11,23 +11,14 @@
 </template>
 
 <script>
-import { createComponent, ref } from '@vue/composition-api';
+// eslint-disable-next-line
+import { createComponent, ref, onMounted, onBeforeUnmount } from '@vue/composition-api';
 
 import sleep from '@/utils/sleep';
 import songs from '@/assets/data/songs.json';
 
 export default createComponent({
   name: 'home',
-  mounted() {
-    this.handleGetRandomSong();
-    this.handleStartLoop();
-    window.addEventListener('blur', () => {
-      this.handleStopLoop();
-    });
-    window.addEventListener('focus', () => {
-      this.handleStartLoop();
-    });
-  },
   setup() {
     const timer = ref('');
     const currentSong = ref(songs[0]);
@@ -53,6 +44,18 @@ export default createComponent({
       window.clearInterval(timer.value);
       timer.value = '';
     }
+
+    onMounted(() => {
+      handleGetRandomSong();
+      handleStartLoop();
+      window.addEventListener('blur', handleStopLoop);
+      window.addEventListener('focus', handleStartLoop);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('blur', handleStopLoop);
+      window.removeEventListener('focus', handleStartLoop);
+    });
 
     return {
       timer,
