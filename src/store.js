@@ -1,16 +1,26 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import VueCompositionApi, { reactive, provide, inject } from '@vue/composition-api';
 
-Vue.use(Vuex);
+Vue.use(VueCompositionApi);
 
-export default new Vuex.Store({
-  state: {
+const StoreSymbol = Symbol('store');
 
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
+const store = reactive({
+  stayedTime: 0,
 });
+
+export const mutations = {
+  setStayedTime(payload) {
+    store.stayedTime = payload;
+  },
+};
+
+export function provideStore(_store) {
+  provide(StoreSymbol, _store);
+}
+
+export function useStore() {
+  return inject(StoreSymbol);
+}
+
+export default store;

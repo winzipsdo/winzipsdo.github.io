@@ -1,24 +1,45 @@
 <template>
   <div class="container">
-    <transition name="el-fade-in-linear">
-      <div class="content-wrapper" v-show="contentVisible">
-        <p v-for="(row, index) in currentSong.text" :key="index">{{ row }}</p>
-        <p class="message">{{ currentSong.title }} - {{ currentSong.author }}</p>
-      </div>
-    </transition>
+    <lyrics></lyrics>
+    <child-one></child-one>
+    <child-two></child-two>
   </div>
 </template>
 
 <script>
 import { createComponent } from '@vue/composition-api';
 
-import useGetSongsInfo from '@/hooks/useGetSongsInfo';
+import Lyrics from '@/components/Lyrics.vue';
+
+import store, { provideStore, useStore } from '@/store';
+
+const ChildOne = createComponent({
+  name: 'child-one',
+  setup() {
+    const store = useStore(); // eslint-disable-line
+    return { store };
+  },
+  render() {
+    return <div>child one</div>;
+  },
+});
+
+const ChildTwo = createComponent({
+  name: 'child-two',
+  setup() {
+    const store = useStore(); // eslint-disable-line
+    return { store };
+  },
+  render() {
+    return <div>child two</div>;
+  },
+});
 
 export default createComponent({
   name: 'home',
+  components: { Lyrics, ChildOne, ChildTwo },
   setup() {
-    const { contentVisible, currentSong } = useGetSongsInfo();
-    return { contentVisible, currentSong };
+    provideStore(store);
   },
 });
 </script>
