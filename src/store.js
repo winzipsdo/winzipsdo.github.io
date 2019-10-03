@@ -19,6 +19,12 @@ export const mutations = {
   },
 };
 
+export const getters = {
+  testGetter() {
+    return store.changedTimes + store.stayedTime;
+  },
+};
+
 export function provideStore(_store) {
   provide(StoreSymbol, _store);
 }

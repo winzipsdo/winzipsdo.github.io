@@ -2,8 +2,8 @@
 import { createComponent } from '@vue/composition-api';
 
 import Lyrics from '../components/Lyrics.vue';
-
-import store, { provideStore, useStore, mutations } from '../store';
+// eslint-disable-next-line
+import store, { provideStore, useStore, mutations, getters } from '../store';
 
 const ChildOne = createComponent({
   name: 'child-one',
@@ -14,8 +14,9 @@ const ChildOne = createComponent({
   render() {
     return (
       <div>
-        <div>child one {this.store.changedTimes}</div>
+        <div>child one</div>
         <button onClick={() => mutations.setChangedTimes(this.store.changedTimes + 1)}>+</button>
+        <div>changedTimes: {this.store.changedTimes}</div>
       </div>
     );
   },
@@ -30,8 +31,9 @@ const ChildTwo = createComponent({
   render() {
     return (
       <div>
-        <div>child two {this.store.changedTimes}</div>
+        <div>child two</div>
         <button onClick={() => mutations.setChangedTimes(this.store.changedTimes - 1)}>-</button>
+        <div>changedTimes: {this.store.changedTimes}</div>
       </div>
     );
   },
@@ -45,8 +47,11 @@ export default createComponent({
   render() {
     return (
       <div class="container">
+        <div>changedTimes + stayedTimes: {getters.testGetter()}</div>
+        <div>---------------------------------</div>
         {false && <Lyrics />}
         <ChildOne />
+        <div>---------------------------------</div>
         <ChildTwo />
       </div>
     );
