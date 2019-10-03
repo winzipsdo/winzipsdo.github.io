@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <lyrics></lyrics>
+    <!-- <lyrics></lyrics> -->
     <child-one></child-one>
     <child-two></child-two>
   </div>
@@ -9,9 +9,9 @@
 <script>
 import { createComponent } from '@vue/composition-api';
 
-import Lyrics from '@/components/Lyrics.vue';
+import Lyrics from '../components/Lyrics.vue';
 
-import store, { provideStore, useStore } from '@/store';
+import store, { provideStore, useStore, mutations } from '../store';
 
 const ChildOne = createComponent({
   name: 'child-one',
@@ -20,7 +20,12 @@ const ChildOne = createComponent({
     return { store };
   },
   render() {
-    return <div>child one</div>;
+    return (
+      <div>
+        <div>child one {this.store.changedTimes}</div>
+        <button onClick={() => mutations.setChangedTimes(this.store.changedTimes + 1)}>+</button>
+      </div>
+    );
   },
 });
 
@@ -31,7 +36,12 @@ const ChildTwo = createComponent({
     return { store };
   },
   render() {
-    return <div>child two</div>;
+    return (
+      <div>
+        <div>child two {this.store.changedTimes}</div>
+        <button onClick={() => mutations.setChangedTimes(this.store.changedTimes - 1)}>-</button>
+      </div>
+    );
   },
 });
 
