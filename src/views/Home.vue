@@ -1,11 +1,3 @@
-<template>
-  <div class="container">
-    <!-- <lyrics></lyrics> -->
-    <child-one></child-one>
-    <child-two></child-two>
-  </div>
-</template>
-
 <script>
 import { createComponent } from '@vue/composition-api';
 
@@ -47,9 +39,17 @@ const ChildTwo = createComponent({
 
 export default createComponent({
   name: 'home',
-  components: { Lyrics, ChildOne, ChildTwo },
   setup() {
     provideStore(store);
+  },
+  render() {
+    return (
+      <div class="container">
+        {false && <Lyrics />}
+        <ChildOne />
+        <ChildTwo />
+      </div>
+    );
   },
 });
 </script>
