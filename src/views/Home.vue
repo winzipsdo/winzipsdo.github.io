@@ -7,14 +7,23 @@ import store, { provideStore, useStore, mutations, getters } from '../store';
 
 const ChildOne = createComponent({
   name: 'child-one',
-  setup() {
+  props: ['propName'],
+  setup(props, ctx) {
+    console.log(props);
+    console.log(ctx);
     const store = useStore(); // eslint-disable-line
     return { store };
   },
   render() {
     return (
       <div>
-        <div>child one</div>
+        <div
+          ref="titleRef"
+          onClick={() => {
+            this.$emit('hello');
+          }}>
+          child one
+        </div>
         <button onClick={() => mutations.setChangedTimes(this.store.changedTimes + 1)}>+</button>
         <div>changedTimes: {this.store.changedTimes}</div>
       </div>
@@ -50,7 +59,13 @@ export default createComponent({
         <div>changedTimes + stayedTimes: {getters.testGetter()}</div>
         <div>---------------------------------</div>
         {false && <Lyrics />}
-        <ChildOne />
+        <ChildOne
+          hello="1"
+          propName="1"
+          vOn:hello={() => {
+            console.log('hello');
+          }}
+        />
         <div>---------------------------------</div>
         <ChildTwo />
       </div>
