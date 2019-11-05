@@ -15,6 +15,7 @@ export default function useGetSongsInfo() {
     const index = Math.floor(Math.random() * length);
     currentSong.value = songs[index];
     contentVisible.value = true;
+    // eslint-disable-next-line
     console.log(new Date());
   }
 
