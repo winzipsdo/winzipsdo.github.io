@@ -11,7 +11,6 @@
 
 <script>
 import { createComponent } from '@vue/composition-api';
-
 import useGetSongsInfo from '@/hooks/useGetSongsInfo';
 
 export default createComponent({
