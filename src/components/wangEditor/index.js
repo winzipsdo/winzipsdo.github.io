@@ -1,4 +1,4 @@
 // import editor from 'wangeditor';
-import editor from './wangEditor';
+import Editor from './wangEditor';
 
-export default editor;
+export default Editor;

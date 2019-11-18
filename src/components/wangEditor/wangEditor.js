@@ -5,10 +5,10 @@ export default (function EditorFunction() {
       poly-fill
   */
 
-  var polyfill = function() {
+  var polyfill = function () {
     // Object.assign
     if (typeof Object.assign != 'function') {
-      Object.assign = function(target, varArgs) {
+      Object.assign = function (target, varArgs) {
         // .length of function is 2
         if (target == null) {
           // TypeError if undefined or null
@@ -42,10 +42,10 @@ export default (function EditorFunction() {
         Element.prototype.msMatchesSelector ||
         Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
-        function(s) {
+        function (s) {
           var matches = (this.document || this.ownerDocument).querySelectorAll(s),
             i = matches.length;
-          while (--i >= 0 && matches.item(i) !== this) {}
+          while (--i >= 0 && matches.item(i) !== this) { }
           return i > -1;
         };
     }
@@ -158,7 +158,7 @@ export default (function EditorFunction() {
     // clone
     clone: function clone(deep) {
       var cloneList = [];
-      this.forEach(function(elem) {
+      this.forEach(function (elem) {
         cloneList.push(elem.cloneNode(!!deep));
       });
       return $(cloneList);
@@ -196,8 +196,8 @@ export default (function EditorFunction() {
       var types = [];
       types = type.split(/\s+/);
 
-      return this.forEach(function(elem) {
-        types.forEach(function(type) {
+      return this.forEach(function (elem) {
+        types.forEach(function (type) {
           if (!type) {
             return;
           }
@@ -216,7 +216,7 @@ export default (function EditorFunction() {
           }
 
           // 有代理
-          elem.addEventListener(type, function(e) {
+          elem.addEventListener(type, function (e) {
             var target = e.target;
             if (target.matches(selector)) {
               fn.call(target, e);
@@ -228,7 +228,7 @@ export default (function EditorFunction() {
 
     // 取消事件绑定
     off: function off(type, fn) {
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         elem.removeEventListener(type, fn);
       });
     },
@@ -240,7 +240,7 @@ export default (function EditorFunction() {
         return this[0].getAttribute(key);
       } else {
         // 设置值
-        return this.forEach(function(elem) {
+        return this.forEach(function (elem) {
           elem.setAttribute(key, val);
         });
       }
@@ -251,12 +251,12 @@ export default (function EditorFunction() {
       if (!className) {
         return this;
       }
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         var arr = void 0;
         if (elem.className) {
           // 解析当前 className 转换为数组
           arr = elem.className.split(/\s/);
-          arr = arr.filter(function(item) {
+          arr = arr.filter(function (item) {
             return !!item.trim();
           });
           // 添加 class
@@ -276,12 +276,12 @@ export default (function EditorFunction() {
       if (!className) {
         return this;
       }
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         var arr = void 0;
         if (elem.className) {
           // 解析当前 className 转换为数组
           arr = elem.className.split(/\s/);
-          arr = arr.filter(function(item) {
+          arr = arr.filter(function (item) {
             item = item.trim();
             // 删除 class
             if (!item || item === className) {
@@ -298,16 +298,16 @@ export default (function EditorFunction() {
     // 修改 css
     css: function css(key, val) {
       var currentStyle = key + ':' + val + ';';
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         var style = (elem.getAttribute('style') || '').trim();
         var styleArr = void 0,
           resultArr = [];
         if (style) {
           // 将 style 按照 ; 拆分为数组
           styleArr = style.split(';');
-          styleArr.forEach(function(item) {
+          styleArr.forEach(function (item) {
             // 对每项样式，按照 : 拆分为 key 和 value
-            var arr = item.split(':').map(function(i) {
+            var arr = item.split(':').map(function (i) {
               return i.trim();
             });
             if (arr.length === 2) {
@@ -315,7 +315,7 @@ export default (function EditorFunction() {
             }
           });
           // 替换或者新增
-          resultArr = resultArr.map(function(item) {
+          resultArr = resultArr.map(function (item) {
             if (item.indexOf(key) === 0) {
               return currentStyle;
             } else {
@@ -366,8 +366,8 @@ export default (function EditorFunction() {
 
     // 增加子节点
     append: function append($children) {
-      return this.forEach(function(elem) {
-        $children.forEach(function(child) {
+      return this.forEach(function (elem) {
+        $children.forEach(function (child) {
           elem.appendChild(child);
         });
       });
@@ -375,7 +375,7 @@ export default (function EditorFunction() {
 
     // 移除当前节点
     remove: function remove() {
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         if (elem.remove) {
           elem.remove();
         } else {
@@ -415,12 +415,12 @@ export default (function EditorFunction() {
       if (!val) {
         // 获取 text
         var elem = this[0];
-        return elem.innerHTML.replace(/<.*?>/g, function() {
+        return elem.innerHTML.replace(/<.*?>/g, function () {
           return '';
         });
       } else {
         // 设置 text
-        return this.forEach(function(elem) {
+        return this.forEach(function (elem) {
           elem.innerHTML = val;
         });
       }
@@ -445,7 +445,7 @@ export default (function EditorFunction() {
 
     // focus
     focus: function focus() {
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         elem.focus();
       });
     },
@@ -499,7 +499,7 @@ export default (function EditorFunction() {
       if (!referenceNode) {
         return this;
       }
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         var parent = referenceNode.parentNode;
         parent.insertBefore(elem, referenceNode);
       });
@@ -512,7 +512,7 @@ export default (function EditorFunction() {
       if (!referenceNode) {
         return this;
       }
-      return this.forEach(function(elem) {
+      return this.forEach(function (elem) {
         var parent = referenceNode.parentNode;
         if (parent.lastChild === referenceNode) {
           // 最后一个元素
@@ -531,8 +531,8 @@ export default (function EditorFunction() {
   }
 
   // 解绑所有事件，用于销毁编辑器
-  $.offAll = function() {
-    eventList.forEach(function(item) {
+  $.offAll = function () {
+    eventList.forEach(function (item) {
       var elem = item.elem;
       var type = item.type;
       var fn = item.fn;
@@ -905,16 +905,16 @@ export default (function EditorFunction() {
       替换多语言
    */
 
-  var replaceLang = function(editor, str) {
+  var replaceLang = function (editor, str) {
     var langArgs = editor.config.langArgs || [];
     var result = str;
 
-    langArgs.forEach(function(item) {
+    langArgs.forEach(function (item) {
       var reg = item.reg;
       var val = item.val;
 
       if (reg.test(result)) {
-        result = result.replace(reg, function() {
+        result = result.replace(reg, function () {
           return val;
         });
       }
@@ -926,7 +926,7 @@ export default (function EditorFunction() {
   /*
       droplist
   */
-  var _emptyFn = function _emptyFn() {};
+  var _emptyFn = function _emptyFn() { };
 
   // 构造函数
   function DropList(menu, opt) {
@@ -959,7 +959,7 @@ export default (function EditorFunction() {
     // 加入 DOM 并绑定事件
     var $list = $('<ul class="' + (type === 'list' ? 'w-e-list' : 'w-e-block') + '"></ul>');
     $container.append($list);
-    list.forEach(function(item) {
+    list.forEach(function (item) {
       var $elem = item.$elem;
 
       // 替换多语言
@@ -972,11 +972,11 @@ export default (function EditorFunction() {
       if ($elem) {
         $li.append($elem);
         $list.append($li);
-        $li.on('click', function(e) {
+        $li.on('click', function (e) {
           onClick(value);
 
           // 隐藏
-          _this.hideTimeoutId = setTimeout(function() {
+          _this.hideTimeoutId = setTimeout(function () {
             _this.hide();
           }, 0);
         });
@@ -984,8 +984,8 @@ export default (function EditorFunction() {
     });
 
     // 绑定隐藏事件
-    $container.on('mouseleave', function(e) {
-      _this.hideTimeoutId = setTimeout(function() {
+    $container.on('mouseleave', function (e) {
+      _this.hideTimeoutId = setTimeout(function () {
         _this.hide();
       }, 0);
     });
@@ -1188,7 +1188,7 @@ export default (function EditorFunction() {
       width: 100,
       $title: $('<p>字体</p>'),
       type: 'list', // droplist 以列表形式展示
-      list: fontNames.map(function(fontName) {
+      list: fontNames.map(function (fontName) {
         return {
           $elem: $('<span style="font-family: ' + fontName + ';">' + fontName + '</span>'),
           value: fontName,
@@ -1215,7 +1215,7 @@ export default (function EditorFunction() {
       panel
   */
 
-  var emptyFn = function emptyFn() {};
+  var emptyFn = function emptyFn() { };
 
   // 记录已经显示 panel 的菜单
   var _isCreatedPanelMenus = [];
@@ -1253,7 +1253,7 @@ export default (function EditorFunction() {
       // 添加关闭按钮
       var $closeBtn = $('<i class="w-e-icon-close w-e-panel-close"></i>');
       $container.append($closeBtn);
-      $closeBtn.on('click', function() {
+      $closeBtn.on('click', function () {
         _this.hide();
       });
 
@@ -1272,7 +1272,7 @@ export default (function EditorFunction() {
       var tabs = opt.tabs || [];
       var tabTitleArr = [];
       var tabContentArr = [];
-      tabs.forEach(function(tab, tabIndex) {
+      tabs.forEach(function (tab, tabIndex) {
         if (!tab) {
           return;
         }
@@ -1303,16 +1303,16 @@ export default (function EditorFunction() {
         }
 
         // 绑定 tab 的事件
-        $title.on('click', function(e) {
+        $title.on('click', function (e) {
           if ($title._active) {
             return;
           }
           // 隐藏所有的 tab
-          tabTitleArr.forEach(function($title) {
+          tabTitleArr.forEach(function ($title) {
             $title._active = false;
             $title.removeClass('w-e-active');
           });
-          tabContentArr.forEach(function($content) {
+          tabContentArr.forEach(function ($content) {
             $content.hide();
           });
 
@@ -1324,11 +1324,11 @@ export default (function EditorFunction() {
       });
 
       // 绑定关闭事件
-      $container.on('click', function(e) {
+      $container.on('click', function (e) {
         // 点击时阻止冒泡
         e.stopPropagation();
       });
-      $body.on('click', function(e) {
+      $body.on('click', function (e) {
         _this.hide();
       });
 
@@ -1336,17 +1336,17 @@ export default (function EditorFunction() {
       $textContainerElem.append($container);
 
       // 绑定 opt 的事件，只有添加到 DOM 之后才能绑定成功
-      tabs.forEach(function(tab, index) {
+      tabs.forEach(function (tab, index) {
         if (!tab) {
           return;
         }
         var events = tab.events || [];
-        events.forEach(function(event) {
+        events.forEach(function (event) {
           var selector = event.selector;
           var type = event.type;
           var fn = event.fn || emptyFn;
           var $content = tabContentArr[index];
-          $content.find(selector).on(type, function(e) {
+          $content.find(selector).on(type, function (e) {
             e.stopPropagation();
             var needToHide = fn(e);
             // 执行完事件之后，是否要关闭 panel
@@ -1381,7 +1381,7 @@ export default (function EditorFunction() {
       }
 
       // 将该 menu 记录中移除
-      _isCreatedPanelMenus = _isCreatedPanelMenus.filter(function(item) {
+      _isCreatedPanelMenus = _isCreatedPanelMenus.filter(function (item) {
         if (item === menu) {
           return false;
         } else {
@@ -1395,7 +1395,7 @@ export default (function EditorFunction() {
       if (!_isCreatedPanelMenus.length) {
         return;
       }
-      _isCreatedPanelMenus.forEach(function(menu) {
+      _isCreatedPanelMenus.forEach(function (menu) {
         var panel = menu.panel || {};
         if (panel.hide) {
           panel.hide();
@@ -1965,7 +1965,7 @@ export default (function EditorFunction() {
       width: 120,
       $title: $('<p>文字颜色</p>'),
       type: 'inline-block', // droplist 内容以 block 形式展示
-      list: colors.map(function(color) {
+      list: colors.map(function (color) {
         return {
           $elem: $('<i style="color:' + color + ';" class="w-e-icon-pencil2"></i>'),
           value: color,
@@ -2012,7 +2012,7 @@ export default (function EditorFunction() {
       width: 120,
       $title: $('<p>背景色</p>'),
       type: 'inline-block', // droplist 内容以 block 形式展示
-      list: colors.map(function(color) {
+      list: colors.map(function (color) {
         return {
           $elem: $('<i style="color:' + color + ';" class="w-e-icon-paint-brush"></i>'),
           value: color,
@@ -2285,7 +2285,7 @@ export default (function EditorFunction() {
 
       // 创建表情 dropPanel 的配置
       var tabConfig = [];
-      emotions.forEach(function(emotData) {
+      emotions.forEach(function (emotData) {
         var emotType = emotData.type;
         var content = emotData.content || [];
 
@@ -2294,7 +2294,7 @@ export default (function EditorFunction() {
 
         // emoji 表情
         if (emotType === 'emoji') {
-          content.forEach(function(item) {
+          content.forEach(function (item) {
             if (item) {
               faceHtml += '<span class="w-e-item">' + item + '</span>';
             }
@@ -2302,7 +2302,7 @@ export default (function EditorFunction() {
         }
         // 图片表情
         if (emotType === 'image') {
-          content.forEach(function(item) {
+          content.forEach(function (item) {
             var src = item.src;
             var alt = item.alt;
             if (src) {
@@ -2590,7 +2590,7 @@ export default (function EditorFunction() {
       var $tr = $selectionELem.parent();
       var $tds = $tr.children();
       var tdLength = $tds.length;
-      $tds.forEach(function(td, index) {
+      $tds.forEach(function (td, index) {
         if (td === $selectionELem[0]) {
           // 记录并跳出循环
           result.td = {
@@ -2606,7 +2606,7 @@ export default (function EditorFunction() {
       var $tbody = $tr.parent();
       var $trs = $tbody.children();
       var trLength = $trs.length;
-      $trs.forEach(function(tr, index) {
+      $trs.forEach(function (tr, index) {
         if (tr === $tr[0]) {
           // 记录并跳出循环
           result.tr = {
@@ -2661,7 +2661,7 @@ export default (function EditorFunction() {
       var $trs = $trParent.children();
 
       // 遍历所有行
-      $trs.forEach(function(tr) {
+      $trs.forEach(function (tr) {
         var $tr = $(tr);
         var $tds = $tr.children();
         var $currentTd = $tds.get(tdIndex);
@@ -2700,7 +2700,7 @@ export default (function EditorFunction() {
       var $trs = $trParent.children();
 
       // 遍历所有行
-      $trs.forEach(function(tr) {
+      $trs.forEach(function (tr) {
         var $tr = $(tr);
         var $tds = $tr.children();
         var $currentTd = $tds.get(tdIndex);
@@ -2760,7 +2760,12 @@ export default (function EditorFunction() {
     constructor: Video,
 
     onClick: function onClick() {
-      this._createPanel();
+      const callback = this.editor.opts.onClickVideo;
+      if (callback) {
+        callback(this);
+      } else {
+        this._createPanel();
+      }
     },
 
     _createPanel: function _createPanel() {
@@ -3143,7 +3148,7 @@ export default (function EditorFunction() {
       var configMenus = config.menus || []; // 获取配置中的菜单
 
       // 根据配置信息，创建菜单
-      configMenus.forEach(function(menuKey) {
+      configMenus.forEach(function (menuKey) {
         var MenuConstructor = MenuConstructors[menuKey];
         if (MenuConstructor && typeof MenuConstructor === 'function') {
           // 创建单个菜单
@@ -3166,7 +3171,7 @@ export default (function EditorFunction() {
       var config = editor.config;
       // config.zIndex 是配置的编辑区域的 z-index，菜单的 z-index 得在其基础上 +1
       var zIndex = config.zIndex + 1;
-      objForEach(menus, function(key, menu) {
+      objForEach(menus, function (key, menu) {
         var $elem = menu.$elem;
         if ($elem) {
           // 设置 z-index
@@ -3180,7 +3185,7 @@ export default (function EditorFunction() {
     _bindEvent: function _bindEvent() {
       var menus = this.menus;
       var editor = this.editor;
-      objForEach(menus, function(key, menu) {
+      objForEach(menus, function (key, menu) {
         var type = menu.type;
         if (!type) {
           return;
@@ -3191,7 +3196,7 @@ export default (function EditorFunction() {
 
         // 点击类型，例如 bold
         if (type === 'click' && menu.onClick) {
-          $elem.on('click', function(e) {
+          $elem.on('click', function (e) {
             if (editor.selection.getRange() == null) {
               return;
             }
@@ -3202,18 +3207,18 @@ export default (function EditorFunction() {
         // 下拉框，例如 head
         if (type === 'droplist' && droplist) {
           $elem
-            .on('mouseenter', function(e) {
+            .on('mouseenter', function (e) {
               if (editor.selection.getRange() == null) {
                 return;
               }
               // 显示
-              droplist.showTimeoutId = setTimeout(function() {
+              droplist.showTimeoutId = setTimeout(function () {
                 droplist.show();
               }, 200);
             })
-            .on('mouseleave', function(e) {
+            .on('mouseleave', function (e) {
               // 隐藏
-              droplist.hideTimeoutId = setTimeout(function() {
+              droplist.hideTimeoutId = setTimeout(function () {
                 droplist.hide();
               }, 0);
             });
@@ -3221,7 +3226,7 @@ export default (function EditorFunction() {
 
         // 弹框类型，例如 link
         if (type === 'panel' && menu.onClick) {
-          $elem.on('click', function(e) {
+          $elem.on('click', function (e) {
             e.stopPropagation();
             if (editor.selection.getRange() == null) {
               return;
@@ -3236,9 +3241,9 @@ export default (function EditorFunction() {
     // 尝试修改菜单状态
     changeActive: function changeActive() {
       var menus = this.menus;
-      objForEach(menus, function(key, menu) {
+      objForEach(menus, function (key, menu) {
         if (menu.tryChangeActive) {
-          setTimeout(function() {
+          setTimeout(function () {
             menu.tryChangeActive();
           }, 100);
         }
@@ -3325,7 +3330,7 @@ export default (function EditorFunction() {
       return result;
     }
 
-    objForEach(items, function(key, value) {
+    objForEach(items, function (key, value) {
       var type = value.type;
       if (/image/i.test(type)) {
         result.push(value.getAsFile());
@@ -3343,7 +3348,7 @@ export default (function EditorFunction() {
   function getChildrenJSON($elem) {
     var result = [];
     var $children = $elem.childNodes() || []; // 注意 childNodes() 可以获取文本节点
-    $children.forEach(function(curElem) {
+    $children.forEach(function (curElem) {
       var elemResult = void 0;
       var nodeType = curElem.nodeType;
 
@@ -3491,11 +3496,11 @@ export default (function EditorFunction() {
       }
       // 按键后保存
       $textElem.on('keyup', saveRange);
-      $textElem.on('mousedown', function(e) {
+      $textElem.on('mousedown', function (e) {
         // mousedown 状态下，鼠标滑动到编辑区域外面，也需要保存选区
         $textElem.on('mouseleave', saveRange);
       });
-      $textElem.on('mouseup', function(e) {
+      $textElem.on('mouseup', function (e) {
         saveRange();
         // 在编辑器区域之内完成点击，取消鼠标滑动到编辑区外面的事件
         $textElem.off('mouseleave', saveRange);
@@ -3547,7 +3552,7 @@ export default (function EditorFunction() {
         insertEmptyP($selectionElem);
       }
 
-      $textElem.on('keyup', function(e) {
+      $textElem.on('keyup', function (e) {
         if (e.keyCode !== 13) {
           // 不是回车键
           return;
@@ -3613,7 +3618,7 @@ export default (function EditorFunction() {
         e.preventDefault();
       }
 
-      $textElem.on('keydown', function(e) {
+      $textElem.on('keydown', function (e) {
         if (e.keyCode !== 13) {
           // 不是回车键
           // 取消即将跳转代码块的记录
@@ -3630,7 +3635,7 @@ export default (function EditorFunction() {
       var editor = this.editor;
       var $textElem = editor.$textElem;
 
-      $textElem.on('keydown', function(e) {
+      $textElem.on('keydown', function (e) {
         if (e.keyCode !== 8) {
           return;
         }
@@ -3645,7 +3650,7 @@ export default (function EditorFunction() {
         }
       });
 
-      $textElem.on('keyup', function(e) {
+      $textElem.on('keyup', function (e) {
         if (e.keyCode !== 8) {
           return;
         }
@@ -3694,7 +3699,7 @@ export default (function EditorFunction() {
       }
 
       // 粘贴文字
-      $textElem.on('paste', function(e) {
+      $textElem.on('paste', function (e) {
         if (UA.isIE()) {
           return;
         } else {
@@ -3758,7 +3763,7 @@ export default (function EditorFunction() {
       });
 
       // 粘贴图片
-      $textElem.on('paste', function(e) {
+      $textElem.on('paste', function (e) {
         if (UA.isIE()) {
           return;
         } else {
@@ -3799,7 +3804,7 @@ export default (function EditorFunction() {
       var editor = this.editor;
       var $textElem = editor.$textElem;
 
-      $textElem.on('keydown', function(e) {
+      $textElem.on('keydown', function (e) {
         if (e.keyCode !== 9) {
           return;
         }
@@ -3833,7 +3838,7 @@ export default (function EditorFunction() {
       var $textElem = editor.$textElem;
 
       // 为图片增加 selected 样式
-      $textElem.on('click', 'img', function(e) {
+      $textElem.on('click', 'img', function (e) {
         var img = this;
         var $img = $(img);
 
@@ -3851,7 +3856,7 @@ export default (function EditorFunction() {
       });
 
       // 去掉图片的 selected 样式
-      $textElem.on('click  keyup', function(e) {
+      $textElem.on('click  keyup', function (e) {
         if (e.target.matches('img')) {
           // 点击的是图片，忽略
           return;
@@ -3867,13 +3872,13 @@ export default (function EditorFunction() {
 
       // 禁用 document 拖拽事件
       var $document = $(document);
-      $document.on('dragleave drop dragenter dragover', function(e) {
+      $document.on('dragleave drop dragenter dragover', function (e) {
         e.preventDefault();
       });
 
       // 添加编辑区域拖拽事件
       var $textElem = editor.$textElem;
-      $textElem.on('drop', function(e) {
+      $textElem.on('drop', function (e) {
         e.preventDefault();
         var files = e.dataTransfer && e.dataTransfer.files;
         if (!files || !files.length) {
@@ -4222,7 +4227,7 @@ export default (function EditorFunction() {
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
-      timeoutId = setTimeout(function() {
+      timeoutId = setTimeout(function () {
         _this._hide();
       }, 500);
     },
@@ -4240,17 +4245,17 @@ export default (function EditorFunction() {
 
   var _typeof =
     typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
-      ? function(obj) {
-          return typeof obj;
-        }
-      : function(obj) {
-          return obj &&
-            typeof Symbol === 'function' &&
-            obj.constructor === Symbol &&
-            obj !== Symbol.prototype
-            ? 'symbol'
-            : typeof obj;
-        };
+      ? function (obj) {
+        return typeof obj;
+      }
+      : function (obj) {
+        return obj &&
+          typeof Symbol === 'function' &&
+          obj.constructor === Symbol &&
+          obj !== Symbol.prototype
+          ? 'symbol'
+          : typeof obj;
+      };
 
   /*
       上传图片
@@ -4308,7 +4313,7 @@ export default (function EditorFunction() {
 
       // 验证图片 url 是否有效，无效的话给出提示
       var img = document.createElement('img');
-      img.onload = function() {
+      img.onload = function () {
         var callback = config.linkImgCallback;
         if (callback && typeof callback === 'function') {
           callback(link);
@@ -4316,18 +4321,18 @@ export default (function EditorFunction() {
 
         img = null;
       };
-      img.onerror = function() {
+      img.onerror = function () {
         img = null;
         // 无法成功下载图片
         _this2._alert(
           '插入图片错误',
           'wangEditor: \u63D2\u5165\u56FE\u7247\u51FA\u9519\uFF0C\u56FE\u7247\u94FE\u63A5\u662F "' +
-            link +
-            '"\uFF0C\u4E0B\u8F7D\u8BE5\u94FE\u63A5\u5931\u8D25',
+          link +
+          '"\uFF0C\u4E0B\u8F7D\u8BE5\u94FE\u63A5\u5931\u8D25',
         );
         return;
       };
-      img.onabort = function() {
+      img.onabort = function () {
         img = null;
       };
       img.src = link;
@@ -4372,7 +4377,7 @@ export default (function EditorFunction() {
       // ------------------------------ 验证文件信息 ------------------------------
       var resultFiles = [];
       var errInfo = [];
-      arrForEach(files, function(file) {
+      arrForEach(files, function (file) {
         var name = file.name;
         var size = file.size;
 
@@ -4415,7 +4420,7 @@ export default (function EditorFunction() {
 
       // 添加图片数据
       var formdata = new FormData();
-      arrForEach(resultFiles, function(file) {
+      arrForEach(resultFiles, function (file) {
         var name = uploadFileName || file.name;
         formdata.append(name, file);
       });
@@ -4426,7 +4431,7 @@ export default (function EditorFunction() {
         var uploadImgServerArr = uploadImgServer.split('#');
         uploadImgServer = uploadImgServerArr[0];
         var uploadImgServerHash = uploadImgServerArr[1] || '';
-        objForEach(uploadImgParams, function(key, val) {
+        objForEach(uploadImgParams, function (key, val) {
           // 因使用者反应，自定义参数不能默认 encode ，由 v3.1.1 版本开始注释掉
           // val = encodeURIComponent(val)
 
@@ -4453,7 +4458,7 @@ export default (function EditorFunction() {
 
         // 设置超时
         xhr.timeout = timeout;
-        xhr.ontimeout = function() {
+        xhr.ontimeout = function () {
           // hook - timeout
           if (hooks.timeout && typeof hooks.timeout === 'function') {
             hooks.timeout(xhr, editor);
@@ -4464,7 +4469,7 @@ export default (function EditorFunction() {
 
         // 监控 progress
         if (xhr.upload) {
-          xhr.upload.onprogress = function(e) {
+          xhr.upload.onprogress = function (e) {
             var percent = void 0;
             // 进度条
             var progressBar = new Progress(editor);
@@ -4476,7 +4481,7 @@ export default (function EditorFunction() {
         }
 
         // 返回数据
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           var result = void 0;
           if (xhr.readyState === 4) {
             if (xhr.status < 200 || xhr.status >= 300) {
@@ -4489,7 +4494,7 @@ export default (function EditorFunction() {
               _this3._alert(
                 '上传图片发生错误',
                 '\u4E0A\u4F20\u56FE\u7247\u53D1\u751F\u9519\u8BEF\uFF0C\u670D\u52A1\u5668\u8FD4\u56DE\u72B6\u6001\u662F ' +
-                  xhr.status,
+                xhr.status,
               );
               return;
             }
@@ -4523,7 +4528,7 @@ export default (function EditorFunction() {
               } else {
                 // 将图片插入编辑器
                 var data = result.data || [];
-                data.forEach(function(link) {
+                data.forEach(function (link) {
                   _this3.insertLinkImg(link);
                 });
               }
@@ -4552,7 +4557,7 @@ export default (function EditorFunction() {
         }
 
         // 自定义 headers
-        objForEach(uploadImgHeaders, function(key, val) {
+        objForEach(uploadImgHeaders, function (key, val) {
           xhr.setRequestHeader(key, val);
         });
 
@@ -4568,11 +4573,11 @@ export default (function EditorFunction() {
 
       // ------------------------------ 显示 base64 格式 ------------------------------
       if (uploadImgShowBase64) {
-        arrForEach(files, function(file) {
+        arrForEach(files, function (file) {
           var _this = _this3;
           var reader = new FileReader();
           reader.readAsDataURL(file);
-          reader.onload = function() {
+          reader.onload = function () {
             _this.insertLinkImg(this.result);
           };
         });
@@ -4588,7 +4593,7 @@ export default (function EditorFunction() {
   var editorId = 1;
 
   // 构造函数
-  function Editor(toolbarSelector, textSelector) {
+  function Editor(toolbarSelector, textSelector, opts) {
     if (toolbarSelector == null) {
       // 没有传入任何参数，报错
       throw new Error('错误：初始化编辑器时候未传入任何参数，请查阅文档');
@@ -4598,6 +4603,9 @@ export default (function EditorFunction() {
 
     this.toolbarSelector = toolbarSelector;
     this.textSelector = textSelector;
+    this.opts = opts;
+    // opts.onClickVideo 视频图标点击事件
+    // opts.onClickImage 图片图标点击事件
 
     // 自定义配置
     this.customConfig = {};
@@ -4616,7 +4624,7 @@ export default (function EditorFunction() {
       // 将语言配置，生成正则表达式
       var langConfig = this.config.lang || {};
       var langArgs = [];
-      objForEach(langConfig, function(key, val) {
+      objForEach(langConfig, function (key, val) {
         // key 即需要生成正则表达式的规则，如“插入链接”
         // val 即需要被替换成的语言，如“insert link”
         langArgs.push({
@@ -4707,21 +4715,21 @@ export default (function EditorFunction() {
 
       // 记录输入法的开始和结束
       var compositionEnd = true;
-      $textContainerElem.on('compositionstart', function() {
+      $textContainerElem.on('compositionstart', function () {
         // 输入法开始输入
         compositionEnd = false;
       });
-      $textContainerElem.on('compositionend', function() {
+      $textContainerElem.on('compositionend', function () {
         // 输入法结束输入
         compositionEnd = true;
       });
 
       // 绑定 onchange
-      $textContainerElem.on('click keyup', function() {
+      $textContainerElem.on('click keyup', function () {
         // 输入法结束才出发 onchange
         compositionEnd && _this.change && _this.change();
       });
-      $toolbarElem.on('click', function() {
+      $toolbarElem.on('click', function () {
         this.change && this.change();
       });
 
@@ -4730,7 +4738,7 @@ export default (function EditorFunction() {
         // 当前编辑器是否是焦点状态
         this.isFocus = false;
 
-        $(document).on('click', function(e) {
+        $(document).on('click', function (e) {
           //判断当前点击元素是否在编辑器内
           var isChild = $textElem.isContain($(e.target));
 
@@ -4834,7 +4842,7 @@ export default (function EditorFunction() {
         // 1. $textContainerElem.on('click keyup')
         // 2. $toolbarElem.on('click')
         // 3. editor.cmd.do()
-        this.change = function() {
+        this.change = function () {
           // 判断是否有变化
           var currentHtml = this.txt.html();
 
@@ -4849,7 +4857,7 @@ export default (function EditorFunction() {
           if (onChangeTimeoutId) {
             clearTimeout(onChangeTimeoutId);
           }
-          onChangeTimeoutId = setTimeout(function() {
+          onChangeTimeoutId = setTimeout(function () {
             // 触发配置的 onchange 函数
             onchange(currentHtml);
             beforeChangeHtml = currentHtml;
@@ -4860,7 +4868,7 @@ export default (function EditorFunction() {
       // -------- 绑定 onblur 事件 --------
       var onblur = config$$1.onblur;
       if (onblur && typeof onblur === 'function') {
-        this.onblur = function() {
+        this.onblur = function () {
           var currentHtml = this.txt.html();
           onblur(currentHtml);
         };
@@ -4869,7 +4877,7 @@ export default (function EditorFunction() {
       // -------- 绑定 onfocus 事件 --------
       var onfocus = config$$1.onfocus;
       if (onfocus && typeof onfocus === 'function') {
-        this.onfocus = function() {
+        this.onfocus = function () {
           onfocus();
         };
       }
